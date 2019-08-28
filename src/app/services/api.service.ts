@@ -12,16 +12,15 @@ export class ApiService {
   constructor(private http:HttpClient) { this.setHttpOptions() }
   userLogedIn
   httpOptions
-  setHttpOptions(){
+  setHttpOptions() {
 
     this.userLogedIn = JSON.parse(localStorage.getItem("userDetails"))
     if (this.userLogedIn != null) {
       // alert(this.userLogedIn.token)
       let headers = new HttpHeaders({
-        "Content-Type": "application/json",
-        'Authorization': "Bearer "+this.userLogedIn.token
+        'Authorization': "Bearer " + this.userLogedIn.token
       })
-      // let headers =  new HttpHeaders().set("Authorization", "Bearer " + this.userLogedIn.token);
+      // let headers = new HttpHeaders().set("Authorization", this.userLogedIn.token);
       this.httpOptions = {
         headers: headers
       }
@@ -69,14 +68,30 @@ export class ApiService {
     )
   }
 
-  chatSubmit(formdata){
-    let data={"chat_id":"","selectedItem":"","currentTopic":" ","currText":formdata.message+"\n","currentStep":"chat","env":" bots","history":"","session":"","session_data":{ "email":"rahul​@cognicor.com​"},"time_zone":"Asia/Calcutta","Date":"2019-08-26T05:45:57. 908Z"} 
-return this.http.post('http://localhost:4200/5d6368556514a5000d5591ba/MultiAgentSystem/servlet', data)
-.pipe(
-  map(res=>{
-    return res
-  })
-)
+  chatSubmit(formdata, chatId) {
+    let data = {
+      "chat_id": chatId,
+      "selectedItem": "",
+      "currentTopic": "",
+      "currText": formdata.message + "\n",
+      "currentStep": "chat",
+      "env": "bots",
+      "history": "",
+      "session": "",
+      "session_data": {
+        "email": "rahul@cognicor.com"
+
+      },
+      "time_zone": "Asia/Calcutta",
+      "Date": new Date()
+
+    }
+    return this.http.post('http://localhost:4200/5d6368556514a5000d5591ba/MultiAgentSystem/servlet', data, this.httpOptions)
+      .pipe(
+        map(res => {
+          return res
+        })
+      )
 
   }
 

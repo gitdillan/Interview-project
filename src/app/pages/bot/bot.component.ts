@@ -10,6 +10,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class BotComponent implements OnInit {
  welcome
  chatForm
+ chatId
+ chats = new Array();
 
   constructor( private apiservice:ApiService, private fb:FormBuilder, private _snackBar: MatSnackBar) { 
 
@@ -22,17 +24,23 @@ export class BotComponent implements OnInit {
 
   }
 
-  onSubmit(){
+  onSubmit() {
     //alert("here")
-    let formdata=this.chatForm.value;
+    let formdata = this.chatForm.value;
     //console.log(formdata)
-    this.apiservice.chatSubmit(formdata)
-    .subscribe((res:any)=>{
-     console.log(res)
-      
-    },error=>{
-      console.warn(error)
-    })
+    this.chats.push({ who: "me", msg: formdata.message })
+    this.apiservice.chatSubmit(formdata, this.chatId)
+      .subscribe((res: any) => {
+        console.log(res)
+        this.chatId = res.chat_id
+        this.chats.push({ who: "bot", msg: JSON.stringify(res.responseData.primary_panel.lower) })
+        // alert(JSON.stringify(res.responseData.primary_panel.lower[0].label[res.responseData.step_id]))
+        //alert(JSON.stringify(res.responseData.primary_panel.lower[0].label))
+
+        // 
+      }, error => {
+        console.warn(error)
+      })
   }
 
   ngOnInit() {
