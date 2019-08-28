@@ -1,0 +1,7 @@
+{  
+    "/5d6368556514a5000d5591ba/*": {  
+       "target": "http://ciradev.cognicor.com:8090",  
+       "secure": false,  
+       "logLevel": "debug"  
+    }  
+ }  

@@ -1,0 +1,22 @@
+<div class="home-signin">
+    <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+             
+             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+             <mat-form-field class="signin-full-width">
+                     <input matInput placeholder="Username"  formControlName="username">
+                     <mat-error *ngIf="f.username.hasError('required')">
+                        Username <strong>required</strong>
+                      </mat-error>
+                   </mat-form-field>
+                 
+                   <mat-form-field class="signin-full-width">
+                           <input matInput type="password" placeholder="Password" formControlName="password"> 
+                           <mat-error *ngIf="f.password.hasError('required')">
+                            Password <strong>required</strong>
+                          </mat-error>
+                   </mat-form-field>
+        <div class="mt-2"></div>
+             <button mat-flat-button color="primary">Signin</button>
+             <p class="mt-5 mb-3 text-muted">&copy; Dillan</p>
+           </form>
+           </div>
